@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest, time, re
+from new import new
 
 class TestAddNew(unittest.TestCase):
     def setUp(self):
@@ -18,7 +19,7 @@ class TestAddNew(unittest.TestCase):
         self.open_home_page(wd)
         self.login(wd, password="secret", username="admin")
         self.open_new_page(wd)
-        self.create_group(wd, Surname="Lname", name="Fname")
+        self.create_group(wd, new(Surname="Lname", name="Fname"))
         self.return_to_home_page(wd)
         self.logout(wd)
 
@@ -27,7 +28,7 @@ class TestAddNew(unittest.TestCase):
         self.open_home_page(wd)
         self.login(wd, password="secret", username="admin")
         self.open_new_page(wd)
-        self.create_group(wd, Surname="", name="")
+        self.create_group(wd, new(Surname="", name=""))
         self.return_to_home_page(wd)
         self.logout(wd)
 
@@ -37,14 +38,14 @@ class TestAddNew(unittest.TestCase):
     def return_to_home_page(self, wd):
         wd.find_element_by_link_text("home").click()
 
-    def create_group(self, wd, Surname, name):
+    def create_group(self, wd, new):
         # fill new form
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(name)
+        wd.find_element_by_name("firstname").send_keys(new.name)
         wd.find_element_by_name("lastname").click()
         wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(Surname)
+        wd.find_element_by_name("lastname").send_keys(new.Surname)
         # submit new creation
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
 
