@@ -6,7 +6,7 @@ from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest, time, re
-from new import new
+from new import New
 
 class TestAddNew(unittest.TestCase):
     def setUp(self):
@@ -19,7 +19,7 @@ class TestAddNew(unittest.TestCase):
         self.open_home_page(wd)
         self.login(wd, password="secret", username="admin")
         self.open_new_page(wd)
-        self.create_group(wd, new(Surname="Lname", name="Fname"))
+        self.create_group(wd, New(Surname="Lname", name="Fname"))
         self.return_to_home_page(wd)
         self.logout(wd)
 
@@ -28,7 +28,7 @@ class TestAddNew(unittest.TestCase):
         self.open_home_page(wd)
         self.login(wd, password="secret", username="admin")
         self.open_new_page(wd)
-        self.create_group(wd, new(Surname="", name=""))
+        self.create_group(wd, New(Surname="", name=""))
         self.return_to_home_page(wd)
         self.logout(wd)
 
