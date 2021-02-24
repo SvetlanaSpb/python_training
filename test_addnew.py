@@ -16,20 +16,14 @@ class TestAddNew(unittest.TestCase):
     
     def test_add_new(self):
         wd = self.wd
-        self.open_home_page(wd)
         self.login(wd, password="secret", username="admin")
-        self.open_new_page(wd)
         self.create_group(wd, New(Surname="Lname", name="Fname"))
-        self.return_to_home_page(wd)
         self.logout(wd)
 
     def test_add_emptynew(self):
         wd = self.wd
-        self.open_home_page(wd)
         self.login(wd, password="secret", username="admin")
-        self.open_new_page(wd)
         self.create_group(wd, New(Surname="", name=""))
-        self.return_to_home_page(wd)
         self.logout(wd)
 
     def logout(self, wd):
@@ -39,6 +33,7 @@ class TestAddNew(unittest.TestCase):
         wd.find_element_by_link_text("home").click()
 
     def create_group(self, wd, new):
+        self.open_new_page(wd)
         # fill new form
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
@@ -48,11 +43,13 @@ class TestAddNew(unittest.TestCase):
         wd.find_element_by_name("lastname").send_keys(new.Surname)
         # submit new creation
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
+        self.return_to_home_page(wd)
 
     def open_new_page(self, wd):
         wd.find_element_by_link_text("add new").click()
 
     def login(self, wd, password, username):
+        self.open_home_page(wd)
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys(username)
