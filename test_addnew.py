@@ -1,80 +1,30 @@
 # -*- coding: utf-8 -*-
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import Select
-from selenium.common.exceptions import NoSuchElementException
-from selenium.common.exceptions import NoAlertPresentException
-import unittest, time, re
+import pytest
 from new import New
+from application import Application
 
-class TestAddNew(unittest.TestCase):
-    def setUp(self):
-        self.wd = webdriver.Firefox()
-        self.wd.implicitly_wait(30)
+
+
+@pytest.fixture
+def app(request):
+    fixture = Application()
+    request.addfinalizer(fixture.destroy)
+    return fixture
+    
+def test_add_new(app):
+    app.login(password="secret", username="admin")
+    app.create_group(New(Surname="Lname", name="Fname"))
+    app.logout()
+
+def test_add_emptynew(app):
+    app.login(password="secret", username="admin")
+    app.create_group(New(Surname="", name=""))
+    app.logout()
+
+
 
     
-    def test_add_new(self):
-        wd = self.wd
-        self.login(wd, password="secret", username="admin")
-        self.create_group(wd, New(Surname="Lname", name="Fname"))
-        self.logout(wd)
-
-    def test_add_emptynew(self):
-        wd = self.wd
-        self.login(wd, password="secret", username="admin")
-        self.create_group(wd, New(Surname="", name=""))
-        self.logout(wd)
-
-    def logout(self, wd):
-        wd.find_element_by_link_text("Logout").click()
-
-    def return_to_home_page(self, wd):
-        wd.find_element_by_link_text("home").click()
-
-    def create_group(self, wd, new):
-        self.open_new_page(wd)
-        # fill new form
-        wd.find_element_by_name("firstname").click()
-        wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(new.name)
-        wd.find_element_by_name("lastname").click()
-        wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(new.Surname)
-        # submit new creation
-        wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
-        self.return_to_home_page(wd)
-
-    def open_new_page(self, wd):
-        wd.find_element_by_link_text("add new").click()
-
-    def login(self, wd, password, username):
-        self.open_home_page(wd)
-        wd.find_element_by_name("user").click()
-        wd.find_element_by_name("user").clear()
-        wd.find_element_by_name("user").send_keys(username)
-        wd.find_element_by_xpath("//form[@id='LoginForm']/label[2]").click()
-        wd.find_element_by_name("pass").click()
-        wd.find_element_by_name("pass").clear()
-        wd.find_element_by_name("pass").send_keys(password)
-        wd.find_element_by_xpath("//input[@value='Login']").click()
-
-    def open_home_page(self, wd):
-        wd.get("http://localhost/addressbook/")
-
-    def is_element_present(self, how, what):
-        try: self.wd.find_element(by=how, value=what)
-        except NoSuchElementException as e: return False
-        return True
-    
-    def is_alert_present(self):
-        try: self.wd.switch_to_alert()
-        except NoAlertPresentException as e: return False
-        return True
 
     
-    def tearDown(self):
-        self.wd.quit()
 
-if __name__ == "__main__":
-    unittest.main()
+
