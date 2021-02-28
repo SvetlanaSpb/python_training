@@ -12,14 +12,14 @@ def app(request):
     return fixture
     
 def test_add_new(app):
-    app.login(password="secret", username="admin")
+    app.session.login(password="secret", username="admin")
     app.create_group(New(Surname="Lname", name="Fname"))
-    app.logout()
+    app.session.logout()
 
 def test_add_emptynew(app):
-    app.login(password="secret", username="admin")
+    app.session.login(password="secret", username="admin")
     app.create_group(New(Surname="", name=""))
-    app.logout()
+    app.session.logout()
 
 
 
