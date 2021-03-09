@@ -22,6 +22,9 @@ class ContactHelper:
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
         self.return_to_home_page()
 
+
+
+
     def open_new_page(self):
         wd = self.app.wd
         wd.find_element_by_link_text("add new").click()
