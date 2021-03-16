@@ -15,18 +15,24 @@ class ContactHelper:
         assert isinstance(wd, object)
         wd.switch_to_alert().accept()
 
-    def modify_first_new(self):
+    def modify_first_new(self, new):
         wd = self.app.wd
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
-        wd.find_element_by_name("firstname").click()
-        wd.find_element_by_name("firstname").send_keys("Edit name")
+        self.fill_contact_forms(new)
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
 
 
     def create(self, new):
         wd = self.app.wd
         self.open_home_page()
+        self.fill_contact_forms(new)
+        # submit new creation
+        wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
+        self.return_to_home_page()
+
+    def fill_contact_forms(self, new):
+        wd = self.app.wd
         # fill new form
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
@@ -34,9 +40,6 @@ class ContactHelper:
         wd.find_element_by_name("lastname").click()
         wd.find_element_by_name("lastname").clear()
         wd.find_element_by_name("lastname").send_keys(new.Surname)
-        # submit new creation
-        wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
-        self.return_to_home_page()
 
     def open_home_page(self):
         wd = self.app.wd
