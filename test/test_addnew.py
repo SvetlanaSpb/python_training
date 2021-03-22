@@ -12,12 +12,9 @@ def app(request):
 
 
 def test_add_new(app):
-    app.session.login(password="secret", username="admin")
     app.contact.create(New(Surname="Lname", name="Fname"))
-    app.session.logout()
+
 
 
 def test_add_emptynew(app):
-    app.session.login(password="secret", username="admin")
     app.contact.create(New(Surname="", name=""))
-    app.session.logout()
