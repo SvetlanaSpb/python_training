@@ -12,9 +12,9 @@ def app(request):
 
 
 def test_add_new(app):
-    app.contact.create(New(Surname="Lname", name="Fname"))
+    app.contact.create(New(surname="Lname", name="Fname"))
 
 
 
 def test_add_emptynew(app):
-    app.contact.create(New(Surname="", name=""))
+    app.contact.create(New(surname="", name=""))

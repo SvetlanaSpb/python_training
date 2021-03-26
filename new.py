@@ -1,5 +1,5 @@
 class New:
 
-    def __init__(self, Surname, name):
-        self.Surname = Surname
+    def __init__(self, surname, name):
+        self.surname = surname
         self.name = name
