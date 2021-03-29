@@ -10,18 +10,21 @@ class ContactHelper:
 
     def delete_first_new(self):
         wd = self.app.wd
-        wd.find_element_by_name("selected[]").click()
+        self.app.open_home_page()
+        # init contact deletion
         wd.find_element_by_xpath("//input[@value='Delete']").click()
-        assert isinstance(wd, object)
+        # fill contact form
         wd.switch_to_alert().accept()
+        self.return_to_home_page()
 
     def modify_first_new(self, new):
         wd = self.app.wd
+        self.app.open_home_page()
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         self.fill_contact_forms(new)
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
-
+        self.return_to_home_page()
 
     def create(self, new):
         wd = self.app.wd
@@ -39,7 +42,7 @@ class ContactHelper:
         wd.find_element_by_name("firstname").send_keys(new.name)
         wd.find_element_by_name("lastname").click()
         wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(new.Surname)
+        wd.find_element_by_name("lastname").send_keys(new.surname)
 
     def open_home_page(self):
         wd = self.app.wd
