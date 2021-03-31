@@ -46,7 +46,10 @@ class ContactHelper:
 
     def open_home_page(self):
         wd = self.app.wd
-        wd.find_element_by_link_text("add new").click()
+        if not (wd.current_url.endswith("http://localhost/addressbook/") and len(wd.find_elements_by_name("add")) > 0):
+            wd.get("http://localhost/addressbook/")
+
+
 
     def count(self):
         wd = self.app.wd
