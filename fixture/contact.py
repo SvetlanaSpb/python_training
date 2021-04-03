@@ -51,7 +51,6 @@ class ContactHelper:
             wd.get("http://localhost/addressbook/")
 
 
-
     def count(self):
         wd = self.app.wd
         self.open_home_page()

@@ -33,7 +33,6 @@ class GroupHelper:
         self.return_to_groups_page()
 
 
-
     def create(self, group):
         wd = self.app.wd
         self.open_groups_page()
