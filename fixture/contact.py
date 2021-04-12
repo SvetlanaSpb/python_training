@@ -16,6 +16,7 @@ class ContactHelper:
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         # fill contact form
         wd.switch_to_alert().accept()
+        wd.find_element_by_css_selector("div.msgbox")
         self.return_to_home_page()
 
     def modify_first_new(self, new):
