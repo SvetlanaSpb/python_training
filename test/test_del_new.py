@@ -7,7 +7,7 @@ def test_delete_first_new(app):
     old_contacts = app.contact.get_contact_list()
     app.contact.delete_first_new()
     new_contacts = app.contact.get_contact_list()
-    assert len(old_contacts) == len(new_contacts)
+    assert len(old_contacts) - 1 == len(new_contacts)
 
 
 

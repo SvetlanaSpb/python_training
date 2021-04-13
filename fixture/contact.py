@@ -13,6 +13,7 @@ class ContactHelper:
         wd = self.app.wd
         self.app.open_home_page()
         # init contact deletion
+        wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         # fill contact form
         wd.switch_to_alert().accept()
