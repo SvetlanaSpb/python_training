@@ -64,10 +64,9 @@ class ContactHelper:
         self.open_home_page()
         contacts = []
         for element in wd.find_elements_by_xpath("//tr[@name='entry']"):
-            name = element.find_element_by_xpath("./td[3]")
-            surname = element.find_element_by_xpath("./td[2]")
+            text = element.text
             id = element.find_element_by_name("selected[]").get_attribute("value")
-            contacts.append(New(surname=surname, name=name, id=id))
+            contacts.append(New(name=text, id=id))
         return contacts
 
 
