@@ -59,15 +59,25 @@ class ContactHelper:
         self.open_home_page()
         return len(wd.find_elements_by_name("selected[]"))
 
+
+
     def get_contact_list(self):
         wd = self.app.wd
         self.open_home_page()
+        # строим объект с информацией о контакте contacts = []
         contacts = []
-        for element in wd.find_elements_by_xpath("//tr[@name='entry']"):
-            text = element.text
-            id = element.find_element_by_name("selected[]").get_attribute("value")
-            contacts.append(New(name=text, id=id))
+        for row in wd.find_elements_by_name("entry"):
+            cells = row.find_elements_by_tag_name("td")
+            # получаем данные из ячеек
+            name = cells[2].text
+            surname = cells[1].text
+            contact_id = cells[0].find_element_by_tag_name("input").get_attribute("value")
+            # параметры для конструирования нового объекта contacts
+            contacts.append(New(id=contact_id, surname=surname, name=name))
         return contacts
+
+
+
 
 
 
