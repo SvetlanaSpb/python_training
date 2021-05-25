@@ -2,6 +2,7 @@ from model.group import Group
 
 
 def test_delete_first_group(app):
+    # метод позволяет вычислить кол-во групп не загружая список инфо о каждой группе
     if app.group.count() == 0:
         app.group.create(Group(name="test"))
     old_groups = app.group.get_group_list()

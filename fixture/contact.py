@@ -19,6 +19,7 @@ class ContactHelper:
         wd.switch_to_alert().accept()
         wd.find_element_by_css_selector("div.msgbox")
         self.return_to_home_page()
+        self.contact_cache = None
 
     def modify_first_new(self, new):
         wd = self.app.wd
@@ -28,6 +29,7 @@ class ContactHelper:
         self.fill_contact_forms(new)
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
         self.return_to_home_page()
+        self.contact_cache = None
 
     def create(self, new):
         wd = self.app.wd
@@ -37,6 +39,7 @@ class ContactHelper:
         # submit new creation
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
         self.return_to_home_page()
+        self.contact_cache = None
 
     def fill_contact_forms(self, new):
         wd = self.app.wd
@@ -59,22 +62,23 @@ class ContactHelper:
         self.open_home_page()
         return len(wd.find_elements_by_name("selected[]"))
 
-
+    contact_cache = None
 
     def get_contact_list(self):
-        wd = self.app.wd
-        self.open_home_page()
+        if self.contact_cache is None:
+            wd = self.app.wd
+            self.open_home_page()
         # строим объект с информацией о контакте contacts = []
-        contacts = []
-        for row in wd.find_elements_by_name("entry"):
-            cells = row.find_elements_by_tag_name("td")
+            self.contact_cache = []
+            for row in wd.find_elements_by_name("entry"):
+                cells = row.find_elements_by_tag_name("td")
             # получаем данные из ячеек
-            name = cells[2].text
-            surname = cells[1].text
-            contact_id = cells[0].find_element_by_tag_name("input").get_attribute("value")
+                name = cells[2].text
+                surname = cells[1].text
+                contact_id = cells[0].find_element_by_tag_name("input").get_attribute("value")
             # параметры для конструирования нового объекта contacts
-            contacts.append(New(id=contact_id, surname=surname, name=name))
-        return contacts
+                self.contact_cache.append(New(id=contact_id, surname=surname, name=name))
+        return list(self.contact_cache)
 
 
 
