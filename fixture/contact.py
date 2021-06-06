@@ -1,4 +1,5 @@
 from new import New
+import re
 
 class ContactHelper:
 
@@ -58,10 +59,10 @@ class ContactHelper:
         # fill new form
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(new.name)
+        wd.find_element_by_name("firstname").send_keys(new.firstname)
         wd.find_element_by_name("lastname").click()
         wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(new.surname)
+        wd.find_element_by_name("lastname").send_keys(new.lastname)
 
     def open_home_page(self):
         wd = self.app.wd
@@ -85,13 +86,18 @@ class ContactHelper:
             for row in wd.find_elements_by_name("entry"):
                 cells = row.find_elements_by_tag_name("td")
             # получаем данные из ячеек
-                name = cells[2].text
-                surname = cells[1].text
-                contact_id = cells[0].find_element_by_tag_name("input").get_attribute("value")
+                firstname = cells[2].text
+                lastname = cells[1].text
+                id = cells[0].find_element_by_tag_name("input").get_attribute("value")
+                # так как в ячейке телефонов отдельные телефоны не указаны приходится получать информацию по всей ячейке а потом порезать её на части
+                all_phones = cells[
+                    5].text  # теперь это список телефонов у ячейки берём текст а потом делим его на телефоны
+                # и мы можем этот список использовать что бы заполнить свойства объекта contact
+                all_emails = cells[4].text
             # параметры для конструирования нового объекта contacts
-                self.contact_cache.append(New(id=contact_id, surname=surname, name=name))
+                self.contact_cache.append(New(firstname=firstname, lastname=lastname, id=id, all_phones_from_home_page=all_phones,
+                            all_emails_from_home_page=all_emails))
         return list(self.contact_cache)
-
 
 
 
