@@ -3,7 +3,7 @@ from sys import maxsize
 class New:
 
     def __init__(self, firstname=None, middlename=None, lastname=None, nickname=None, title=None, company=None,
-                 address=None, homephone=None,mobilephone=None, workphone=None, fax=None, email=None, email2=None, email3=None,
+                 address=None, homephone=None, mobilephone=None, workphone=None, fax=None, email=None, email2=None, email3=None,
                  homepage=None, bday=None, bmonth=None, byear=None, aday=None, amonth=None, ayear=None, address2=None,
                  secondaryphone=None, notes=None, id=None, all_phones_from_home_page=None, all_emails_from_home_page=None):
         self.firstname = firstname
