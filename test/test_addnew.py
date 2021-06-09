@@ -17,6 +17,7 @@ def test_add_new(app):
     assert sorted(old_contacts, key=New.id_or_max) == sorted(new_contacts, key=New.id_or_max)
 
 
+
 #def test_add_emptynew(app):
     #old_contacts = app.contact.get_contact_list()
     #contact = New(surname="", name="")
