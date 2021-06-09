@@ -131,8 +131,8 @@ class ContactHelper:
         email2 = wd.find_element_by_name("email2").get_attribute("value")
         email3 = wd.find_element_by_name("email3").get_attribute("value")
         # Строим объект из полученных данных, сначала название параметра а потом название локальной переменной
-        return New(firstname=firstname, lastname=lastname, homephone=homephone, mobilephone=mobilephone, workphone=workphone,
-                   secondaryphone=secondaryphone,id=id, email=email, email2=email2, email3=email3)
+        return New(firstname=firstname, lastname=lastname, id=id,homephone=homephone, workphone=workphone,mobilephone=mobilephone,
+                   secondaryphone=secondaryphone, email=email, email2=email2, email3=email3)
 
 
     def get_contact_from_view_page(self, index):
@@ -145,7 +145,7 @@ class ContactHelper:
         workphone = re.search("W: (.*)", text).group(1)
         secondaryphone = re.search("P: (.*)", text).group(1)
 
-        return New(homephone=homephone, mobilephone=mobilephone, workphone=workphone,secondaryphone=secondaryphone)
+        return New(homephone=homephone, workphone=workphone,mobilephone=mobilephone,secondaryphone=secondaryphone)
 
     def change_field_value_date(self, field_date, text):
         wd = self.app.wd
