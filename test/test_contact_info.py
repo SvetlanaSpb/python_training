@@ -5,8 +5,7 @@ import re
 
 def test_contact_info_on_main_page(app):
     if app.contact.count() == 0:
-        app.contact.add_contact(
-            New(firstname="Svetlana", middlename="Alexeyevna", lastname="Andreeva", nickname="Sveta",
+        app.contact.add_contact(New(firstname="Svetlana", middlename="Alexeyevna", lastname="Andreeva", nickname="Sveta",
                       title="test", company="2B", address="Saint-Petersburg", homephone="+78120000000",
                        workphone="+78121000000", mobilephone="+79110000000",secondaryphone="1",fax="+78122000000",
                       email="sve@mail.ru", email2="sve2@mail.ru", email3="sve3@mail.ru",
@@ -27,12 +26,14 @@ def clear(s):
     return re.sub("[() -]", "", s)
 
 
-def merge_phones_like_on_home_page(contact):
+
+def merge_phones_like_on_home_page(new):
     return "\n".join(filter(lambda x: x != "",
                             map(lambda x: clear(x),
                                 filter(lambda x: x is not None,
-                                       [contact.homephone, contact.workphone, contact.mobilephone,contact.secondaryphone]))))
-def merge_emails_like_on_home_page(contact):
+                                       [new.homephone, new.workphone, new.mobilephone,new.secondaryphone]))))
+
+def merge_emails_like_on_home_page(new):
     return "\n".join(filter(lambda x: x != "",
                             filter(lambda x: x is not None,
-                                   [contact.email, contact.email2, contact.email3])))
+                                   [new.email, new.email2, new.email3])))
