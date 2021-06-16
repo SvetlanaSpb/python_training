@@ -31,9 +31,11 @@ def merge_phones_like_on_home_page(new):
     return "\n".join(filter(lambda x: x != "",
                             map(lambda x: clear(x),
                                 filter(lambda x: x is not None,
-                                       [new.homephone, new.workphone, new.mobilephone,new.secondaryphone]))))
+                                       [new.homephone, new.mobilephone, new.workphone, new.secondaryphone]))))
+
 
 def merge_emails_like_on_home_page(new):
     return "\n".join(filter(lambda x: x != "",
-                            filter(lambda x: x is not None,
-                                   [new.email, new.email2, new.email3])))
+                            map(lambda x: clear(x),
+                                filter(lambda x: x is not None,
+                                       [new.email, new.email2, new.email3]))))
