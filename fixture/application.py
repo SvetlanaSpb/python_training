@@ -6,14 +6,14 @@ from fixture.contact import ContactHelper
 
 class Application:
 
-    def __init__(self, browser="firefox"):
+    def __init__(self, browser, base_url):
         # если браузер=фаерфокс, то запускаем фаерфокс иначе, если браузер=хром, то запускаем хром
         if browser == "firefox":
             self.wd = webdriver.Firefox()
         elif browser == "chrome":
-            self.wd == webdriver.Chrome()
+            self.wd = webdriver.Chrome()
         elif browser == "ie":
-            self.wd == webdriver.Ie()
+            self.wd = webdriver.Ie()
         else:
             #выброс исключения, т.е. аварийно прирвется выполнение кода в этом месте
             raise ValueError("Unrecognized browser %s" % browser)
@@ -21,6 +21,7 @@ class Application:
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
+        self.base_url = base_url
 
     def is_valid(self):
         try:
@@ -31,7 +32,7 @@ class Application:
 
     def open_home_page(self):
         wd = self.wd
-        wd.get("http://localhost/addressbook/")
+        wd.get(self.base_url)
 
     def destroy(self):
         self.wd.quit()
