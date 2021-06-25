@@ -2,6 +2,7 @@
 import pytest
 from fixture.application import Application
 import json
+import os.path
 
 # определяем глобальную переменную
 fixture = None
@@ -15,9 +16,11 @@ def app(request):
     browser = request.config.getoption("--browser")
     #пишем проверку
     if target is None:
+        # переменная которая содержит информацию о пути к текущему файлу (преобразовали в абсолютный путь)
+        config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), request.config.getoption("--target"))
     #читаем файл джейсон
-        with open(request.config.getoption("--target")) as config_file:
-            target = json.load(config_file)
+        with open(config_file) as f:
+            target = json.load(f)
     if fixture is None or not fixture.is_valid():
         #функция которая инициализирует фикстуру создает объект класса aplication
         #при инициализации фикстуры нужно передавать параметр
