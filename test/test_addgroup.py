@@ -2,8 +2,9 @@ from model.group import Group
 
 
 #сценарий
-def test_add_group(app, data_groups):
-    group = data_groups
+def test_add_group(app, json_groups):
+    #переменная групп полуает знаение которое задано в каестве параметра
+    group = json_groups
     #загружаем список групп
     old_groups = app.group.get_group_list()
     app.group.create(group)
