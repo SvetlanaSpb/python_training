@@ -64,10 +64,12 @@ class ContactHelper:
         wd.find_element_by_name("lastname").clear()
         wd.find_element_by_name("lastname").send_keys(new.lastname)
 
+
     def open_home_page(self):
         wd = self.app.wd
-        if not (wd.current_url.endswith("http://localhost/addressbook/") and len(wd.find_elements_by_name("add")) > 0):
-            wd.get("http://localhost/addressbook/")
+        if wd.current_url.endswith("/addressbook/"):
+            return
+        wd.find_element_by_link_text("home").click()
 
     def open_contact_to_edit_by_index(self, index):
         wd = self.app.wd
